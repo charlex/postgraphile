@@ -32,6 +32,9 @@
   "bin": {
     "postgraphile": "cli.js"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "build": "./scripts/build",
     "dev": "./scripts/dev",
