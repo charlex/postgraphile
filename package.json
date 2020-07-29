@@ -1,5 +1,5 @@
 {
-  "name": "postgraphile",
+  "name": "@yellowbrim/postgraphile",
   "version": "4.7.0",
   "description": "A GraphQL schema created by reflection over a PostgreSQL schema 🐘 (previously known as PostGraphQL)",
   "author": "Benjie Gillam <benjie@graphile.org> (https://twitter.com/benjie)",
