@@ -1,0 +1,42 @@
+name: test
+
+on:
+  push:
+    branches:
+      - github-workflow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node modules
+        id: cache_node
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn
+            ${{ runner.os }}
+
+      - if: steps.cache_node.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn test
